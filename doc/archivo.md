@@ -1,3 +1,3 @@
-Esto es un txto de pruba para ver si el corrector ortográfico funciona.
+Esto es un texto de prueba para ver si el corrector ortográfico funciona.
 
 Andrés Morales González
