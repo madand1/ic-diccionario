@@ -1,15 +1,14 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'debian-aspell'
+      args '-u root:root'
+    }
+  }
   stages {
     stage('Clone') {
       steps {
-        git branch:'master',url:'https://github.com/madand1/ic-diccionario.git'
-      }
-    }
-    stage('Install') {
-      steps {
-        // Si no tienes permisos, agrega 'sudo' o ejecuta Jenkins con permisos adecuados
-        sh 'sudo apt-get update && apt-get install -y aspell-es'
+        git branch:'master', url:'https://github.com/madand1/ic-diccionario.git'
       }
     }
     stage('Test') {
