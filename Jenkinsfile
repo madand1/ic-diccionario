@@ -9,7 +9,7 @@ pipeline {
     stage('Install') {
       steps {
         // Si no tienes permisos, agrega 'sudo' o ejecuta Jenkins con permisos adecuados
-        sh 'apt-get update && apt-get install -y aspell-es'
+        sh 'sudo apt-get update && apt-get install -y aspell-es'
       }
     }
     stage('Test') {
