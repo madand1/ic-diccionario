@@ -1,34 +1,45 @@
 pipeline {
     agent {
-        docker { image 'debian'
-        args '-u root:root'
+        docker {
+            image 'debian'
+            args '-u root:root'
         }
     }
     stages {
         stage('Clone') {
             steps {
-                git branch:'master',url:'https://github.com/josedom24/ic-travis-diccionario.git'
+                git branch: 'master', url: 'https://github.com/madand1/ic-diccionario.git'
             }
         }
+
         stage('Install') {
             steps {
-                sh 'apt-get update && apt-get install -y aspell-es ' 
+                sh 'apt-get update && apt-get install -y aspell aspell-es'
             }
         }
-        stage('Test')
-        {
+
+        stage('Test') {
             steps {
                 sh '''
-                export LC_ALL=C.UTF-8
-                OUTPUT=`cat doc/*.md | aspell list -d es -p ./.aspell.es.pws`; if [ -n "$OUTPUT" ]; then echo $OUTPUT; exit 1; fi'''
+                    export LC_ALL=C.UTF-8
+                    OUTPUT=$(cat doc/*.md | aspell list -d es -p ./.aspell.es.pws)
+                    if [ -n "$OUTPUT" ]; then
+                        echo "Se han encontrado errores ortográficos:"
+                        echo "$OUTPUT"
+                        exit 1
+                    else
+                        echo "Sin errores ortográficos."
+                    fi
+                '''
             }
         }
     }
+
     post {
-         always {
-          mail to: 'josedom24@josedomingo.org',
-          subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-          body: "${env.BUILD_URL} has result ${currentBuild.result}"
+        always {
+            mail to: 'asirandyglez@gmail.com',
+            subject: "Estado del pipeline: ${currentBuild.fullDisplayName}",
+            body: "${env.BUILD_URL} ha finalizado con resultado: ${currentBuild.result}"
         }
-      }
+    }
 }
