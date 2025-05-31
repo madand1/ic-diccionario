@@ -10,4 +10,4 @@ Ejemplo de integración continúa para
 
 ## Prueba por si funciona:
 
-Esta es una prueva para ver si el corrector ortográfico funciona corectamente.
+Esta es una prueba para ver si el corrector ortográfico funciona correctamente.
