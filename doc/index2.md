@@ -1,1 +1,1 @@
-Funciona.
+Funcionará.
